@@ -34,7 +34,7 @@ function WriteArticle() {
     //add authorId to articleObj
 articleObj.author = currentUser.userId;    try {
       await axios.post(
-        "http://localhost:4000/author-api/articles",
+        "https://mern-week-9-10.onrender.com/author-api/articles",
         articleObj,
         { withCredentials: true }
       );

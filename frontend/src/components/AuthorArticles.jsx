@@ -33,7 +33,7 @@ function AuthorArticles() {
 
     try {
       const res = await axios.get(
-        `http://localhost:4000/author-api/articles/${user.userId}`,
+        `https://mern-week-9-10.onrender.com/author-api/articles/${user.userId}`,
         { withCredentials: true }
       );
 
