@@ -9,7 +9,6 @@ import {
   submitBtn,
   errorClass,
   mutedText,
-  divider,
   linkClass,
 } from "../styles/common";
 import { NavLink } from "react-router";
@@ -32,19 +31,21 @@ function Login() {
   };
 
   useEffect(() => {
-    if (!isAuthenticated || !currentUser) return; // ← CHANGED
+    if (!isAuthenticated || !currentUser) return;
 
-    if (currentUser.role === "USER") {
+    // ← CHANGED: navigate based on role
+    const role = currentUser.role;
+    if (role === "USER") {
       toast.success("Logged in successfully");
-      navigate("/user-profile");
-    } else if (currentUser.role === "AUTHOR") {
+      navigate("/user-profile", { replace: true }); // ← replace: true fixes redirect loop
+    } else if (role === "AUTHOR") {
       toast.success("Logged in successfully");
-      navigate("/author-profile");
-    } else if (currentUser.role === "ADMIN") {
+      navigate("/author-profile", { replace: true });
+    } else if (role === "ADMIN") {
       toast.success("Logged in successfully");
-      navigate("/admin-profile");
+      navigate("/admin-profile", { replace: true });
     }
-  }, [isAuthenticated, currentUser]); // ← CHANGED (removed location.pathname check)
+  }, [isAuthenticated, currentUser]);
 
   return (
     <div className={`${pageBackground} flex items-center justify-center py-16 px-4`}>
@@ -58,9 +59,12 @@ function Login() {
         <form onSubmit={handleSubmit(onUserLogin)}>
           {/* Email */}
           <div className={formGroup}>
-            <label className={labelClass}>Email</label>
+            {/* ← CHANGED: added htmlFor and id to fix label association */}
+            <label className={labelClass} htmlFor="email">Email</label>
             <input
+              id="email"
               type="email"
+              autoComplete="email" // ← NEW: fixes autocomplete warning
               {...register("email")}
               placeholder="you@example.com"
               className={inputClass}
@@ -69,9 +73,12 @@ function Login() {
 
           {/* Password */}
           <div className={formGroup}>
-            <label className={labelClass}>Password</label>
+            {/* ← CHANGED: added htmlFor and id to fix label association */}
+            <label className={labelClass} htmlFor="password">Password</label>
             <input
+              id="password"
               type="password"
+              autoComplete="current-password" // ← NEW: fixes autocomplete warning
               {...register("password")}
               placeholder="••••••••"
               className={inputClass}
