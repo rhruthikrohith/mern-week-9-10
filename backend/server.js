@@ -12,16 +12,13 @@ config(); //process.env
 
 //Create express application
 const app = exp();
-//use cors middleware
-app.use(cors({ 
-  origin: function(origin, callback) {
-    if (!origin || origin.includes('vercel.app') || origin === 'http://localhost:5173') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true 
+//use cors middlewareconst cors = require('cors');
+
+app.use(cors({
+  origin: 'https://mern-week-9-10.vercel.app', // your Vercel frontend URL
+  credentials: true,                            // if you're using cookies/sessions
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 //add body parser middleware
 app.use(exp.json());
