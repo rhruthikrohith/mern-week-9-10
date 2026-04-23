@@ -13,7 +13,10 @@ config(); //process.env
 //Create express application
 const app = exp();
 //use cors middleware
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(cors({
+  origin: ["http://localhost:5173", "https://mern-week-9-10.onrender.com"],
+  credentials: true
+}));
 //add body parser middleware
 app.use(exp.json());
 //add cookie parser middleware
