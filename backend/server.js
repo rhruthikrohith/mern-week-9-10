@@ -13,10 +13,22 @@ config(); //process.env
 //Create express application
 const app = exp();
 //use cors middlewareconst cors = require('cors');
-
 app.use(cors({
-  origin: 'https://mern-week-9-10.vercel.app', // your Vercel frontend URL
-  credentials: true,                            // if you're using cookies/sessions
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'https://mern-week-9-10.vercel.app', // production
+    ];
+
+    // Allow any Vercel preview URL for your project
+    const vercelPreview = /^https:\/\/mern-week-9-10.*\.vercel\.app$/;
+
+    if (!origin || allowedOrigins.includes(origin) || vercelPreview.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
