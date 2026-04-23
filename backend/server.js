@@ -13,9 +13,15 @@ config(); //process.env
 //Create express application
 const app = exp();
 //use cors middleware
-app.use(cors({
-  origin: ["http://localhost:5173", "https://mern-week-9-10.onrender.com"],
-  credentials: true
+app.use(cors({ 
+  origin: function(origin, callback) {
+    if (!origin || origin.includes('vercel.app') || origin === 'http://localhost:5173') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true 
 }));
 //add body parser middleware
 app.use(exp.json());
