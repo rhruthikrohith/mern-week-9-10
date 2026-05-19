@@ -16,10 +16,9 @@ const app = exp();
 app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
-      'https://mern-week-9-10.vercel.app', // production
+      'https://mern-week-9-10.vercel.app',
     ];
 
-    // Allow any Vercel preview URL for your project
     const vercelPreview = /^https:\/\/mern-week-9-10.*\.vercel\.app$/;
 
     if (!origin || allowedOrigins.includes(origin) || vercelPreview.test(origin)) {
@@ -29,7 +28,7 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 //add body parser middleware
